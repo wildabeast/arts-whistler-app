@@ -1,6 +1,7 @@
 // Code for platform detection
 var isMaterial = Framework7.prototype.device.ios === false;
 var isIos = Framework7.prototype.device.ios === true;
+var map;
 
 // Add the above as global variables for templates
 Template7.global = {
@@ -114,6 +115,71 @@ $$(document).on('click', '.panel .culturemap-link', function culturemapLink() {
     reload: true,
   });
 });
+
+myApp.onPageInit('culturemap', function(page) {
+
+  console.log('culturemap init');
+  var div = document.getElementById("map_canvas");
+
+  //if (typeof map === 'undefined') {
+    // Initialize the map view
+    map = plugin.google.maps.Map.getMap(div);
+
+    // Wait until the map is ready status.
+    map.addEventListener(plugin.google.maps.event.MAP_READY, onMapReady);
+  //}
+
+});
+
+$$('.panel-left').on('panel:opened', function () {
+    console.log('setting clickable to false');
+    if (typeof map != 'undefined') {
+      map.setClickable(false);
+    }
+});
+$$('.panel-left').on('panel:closed', function () {
+    console.log('setting clickable to true');
+    if (typeof map != 'undefined') {
+      map.setClickable(true);
+    }
+});
+
+function onMapReady() {
+
+  // Move to the position with animation
+  map.animateCamera({
+    target: {lat: 50.117774, lng: -122.9544902},
+    zoom: 17,
+    tilt: 60,
+    bearing: 140,
+    duration: 5000
+  }, function() {
+
+    // Add a maker
+    map.addMarker({
+      position: {lat: 50.117774, lng: -122.9544902},
+      title: "Arts Whistler",
+      snippet: "Its the home base.",
+      animation: plugin.google.maps.Animation.BOUNCE
+    }, function(marker) {
+
+      // Show the info window
+      // marker.showInfoWindow();
+
+      // Catch the click event
+      marker.on(plugin.google.maps.event.INFO_CLICK, function() {
+
+        // To do something...
+        alert("Hello world!");
+
+      });
+    });
+  });
+
+  function onFullscreenClicked() {
+    map.showDialog();
+  }
+}
 
 /**
  * Search
