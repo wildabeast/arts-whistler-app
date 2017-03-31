@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+      * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+      * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+      * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+  <!-- Removing 'unsafe-eval'. If needed, I will figure out a way around it -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://api.spotify.com 'unsafe-eval' 'unsafe-inline' ws://*; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:">
+  <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: *; style-src 'self' 'unsafe-inline'; media-src *" -->
+  <!-- Required meta tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <link rel="stylesheet" href="lib/font-awesome-4.5.0/css/font-awesome.min.css" />
+
+  <title>Star Track</title>
+</head>
+
+<body class="theme-green">
+  <!-- Status bar overlay for full screen mode (PhoneGap) -->
+  <div class="statusbar-overlay"></div>
+
+  <!-- Panels overlay-->
+  <div class="panel-overlay"></div>
+  <!-- Left panel with cover effect-->
+  <div class="panel panel-left panel-cover">
+    <!--<div class="content-block">-->
+    <div class="content-block-title">Menu</div>
+    <div class="list-block">
+      <ul>
+        <li>
+          <a href="#" class="discover-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Discover</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="events-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Events</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="culturemap-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">Culture Map</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Views -->
+  <div class="views">
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main">
+      <!-- Top Navbar-->
+      <div class="navbar">
+        <div class="navbar-inner" data-page="index">
+          <div class="left">
+            <!--
+              Left link contains only icon - additional "icon-only" class
+              Additional "open-panel" class tells app to open panel when we click on this link
+            -->
+            <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+          </div>
+          <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
+          <div class="center sliding">Discover</div>
+        </div>
+      </div>
+      <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
+      <div class="pages navbar-through">
+        <!-- Page, "data-page" contains page name -->
+        <div data-page="index" class="page">
+          <!-- Scrollable page content -->
+          <div class="page-content">
+            <h1 style="text-align:center">Arts Whistler</h1>
+            <ul class="flex">
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+                <span>Events</span>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/template7" id="events">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="center sliding">Events</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="events">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+              </div>
+            <div class="center sliding">Events</div>
+          </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          <div class="content-block-title">Events</div>
+          {{#if events}}
+          <div class="content-block-title">Events</div>
+          <div class="list-block media-list">
+            <ul>
+              {{#each events}}
+              <li>
+                <a href="#" class="item-link item-content"
+                  data-item="{{@index}}"
+                  data-context="{{stringify this}}"
+                  data-template="details"
+                >
+                  <div class="item-media">
+                    <img width="80" src="{{this.album.images[0].url}}">
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">{{this.name}}</div>
+                      <div class="item-after">{{durationFromMs this.duration_ms}}</div>
+                    </div>
+                    <div class="item-subtitle">{{this.artists[0].name}}</div>
+                    <div class="item-text">{{this.album.name}}</div>
+                  </div>
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+          </div>
+          {{else}}
+          <div class="content-block">
+            <p>No events found.</p>
+          </div>
+          {{/if}}
+          -->
+        </div>
+    </div>
+  </script>
+
+
+  <script type="text/template7" id="culturemap">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="center sliding">Culture Map</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page" data-page="culturemap">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+              </div>
+            <div class="center sliding">Culture Map</div>
+          </div>
+        </div>
+        {{/if}}
+
+        <div class="page-content">
+          <div class="content-block-title">Culture Map</div>
+        </div>
+    </div>
+  </script>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="lib/MSOpenTech/winstore-jscompat.js"></script>
+  <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+  <script type="text/javascript" src="js/init-styles.js"></script>
+  <script type="text/javascript" src="js/my-app.js"></script>
+</body>
+
+</html>
