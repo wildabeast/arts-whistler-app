@@ -88,10 +88,7 @@ $$(document).on('click', '.panel .culturemap-link', function culturemapLink() {
   mainView.router.load({
     template: myApp.templates.culturemap,
     animatePages: false,
-    context: {
-      events: null
-    },
-    reload: true,
+    reload: true
   });
 });
 
@@ -170,10 +167,10 @@ function onMapReady() {
 function fetchEvents() {
   fetchEventsState = 'pending';
   $$.ajax({
-    url: 'js/events.json',
+    //url: 'js/events.json',
+    url: 'http://artswhistler.com/calendar/action~posterboard/page_offset~1/cat_ids~40,32,39,38,34/request_format~json?request_type=json&ai1ec_doing_ajax=true',
     success: function searchSuccess(resp) {
-      var result = eval('(' + resp + ')');
-      events = result.events;
+      events = parseEvents(eval('(' + resp + ')'));
       fetchEventsState = 'success';
     },
     error: function searchError(xhr, err) {
@@ -181,4 +178,16 @@ function fetchEvents() {
       console.log(err);
     }
   });
+}
+
+function parseEvents(resp) {
+  var events = [];
+  var dates = resp.html.dates;
+  for (var key in dates) {
+    if (dates.hasOwnProperty(key)) {
+      events = events.concat(dates[key].events.allday);
+      events = events.concat(dates[key].events.notallday);
+    }
+  }
+  return events;
 }

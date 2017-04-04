@@ -11,7 +11,7 @@
         * Enable inline JS: add 'unsafe-inline' to default-src
     -->
   <!-- Removing 'unsafe-eval'. If needed, I will figure out a way around it -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com https://api.spotify.com 'unsafe-eval' 'unsafe-inline' ws://*; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com http://artswhistler.com 'unsafe-eval' 'unsafe-inline' ws://*; style-src 'self' 'unsafe-inline'; media-src *; img-src * data:">
   <!-- meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: *; style-src 'self' 'unsafe-inline'; media-src *" -->
   <!-- Required meta tags-->
   <meta charset="utf-8">
@@ -84,7 +84,7 @@
             <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
           </div>
           <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-          <div class="center sliding">Discover</div>
+          <!-- div class="center sliding">Discover</div -->
         </div>
       </div>
       <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -145,19 +145,19 @@
               {{#each events}}
               <li>
                 <a href="#" class="item-link item-content"
-                  data-item="{{@index}}"
+                  data-item="{{@post_id}}"
                   data-context="{{stringify this}}"
                   data-template="details"
                 >
                   <div class="item-media">
-                    <img width="80" src="{{this.image_url}}">
+                    <img width="80" src="{{this.avatar_url}}">
                   </div>
                   <div class="item-inner">
                     <div class="item-title-row">
-                      <div class="item-title">{{this.title}}</div>
+                      <div class="item-title">{{this.filtered_title}}</div>
                     </div>
-                    <div class="item-subtitle">{{this.where}}</div>
-                    <div class="item-text">{{this.when}}</div>
+                    <div class="item-subtitle">{{this.venue}}</div>
+                    <div class="item-text">{{this.timespan_short}}</div>
                   </div>
                 </a>
               </li>
