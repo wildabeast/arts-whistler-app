@@ -25,7 +25,7 @@
   <title>Arts Whistler</title>
 </head>
 
-<body class="">
+<body class="theme-gray">
   <!-- Status bar overlay for full screen mode (PhoneGap) -->
   <div class="statusbar-overlay"></div>
 
@@ -34,7 +34,7 @@
   <!-- Left panel with cover effect-->
   <div class="panel panel-left panel-cover">
     <!--<div class="content-block">-->
-    <div class="content-block-title">Menu</div>
+    <div class="logo"></div>
     <div class="list-block">
       <ul>
         <li>
@@ -55,6 +55,13 @@
           <a href="#" class="culturemap-link item-content list-panel-all close-panel item-link">
             <div class="item-inner">
               <div class="item-title">Culture Map</div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="about-link item-content list-panel-all close-panel item-link">
+            <div class="item-inner">
+              <div class="item-title">About Arts Whistler</div>
             </div>
           </a>
         </li>
@@ -89,25 +96,16 @@
             <h1 style="text-align:center">Arts Whistler</h1>
             <ul class="flex">
               <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
+              <a href="#" class="events-link">
                 <span>Events</span>
+              </a>
               </li>
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-                <span>Events</span>
-              </li>
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-                <span>Events</span>
-              </li>
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-                <span>Events</span>
-              </li>
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-                <span>Events</span>
-              </li>
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-                <span>Events</span>
+              <li style="background-image:url(img/gmap-static.png);">
+              <a href="#" class="culturemap-link">
+                <span>Culture Map</span>
+              </a>
               </li>
             </ul>
-
           </div>
         </div>
       </div>
@@ -141,9 +139,7 @@
         {{/if}}
 
         <div class="page-content">
-          <div class="content-block-title">Events</div>
           {{#if events}}
-          <div class="content-block-title">Events</div>
           <div class="list-block media-list">
             <ul>
               {{#each events}}
@@ -154,15 +150,14 @@
                   data-template="details"
                 >
                   <div class="item-media">
-                    <img width="80" src="{{this.album.images[0].url}}">
+                    <img width="80" src="{{this.image_url}}">
                   </div>
                   <div class="item-inner">
                     <div class="item-title-row">
-                      <div class="item-title">{{this.name}}</div>
-                      <div class="item-after">{{durationFromMs this.duration_ms}}</div>
+                      <div class="item-title">{{this.title}}</div>
                     </div>
-                    <div class="item-subtitle">{{this.artists[0].name}}</div>
-                    <div class="item-text">{{this.album.name}}</div>
+                    <div class="item-subtitle">{{this.where}}</div>
+                    <div class="item-text">{{this.when}}</div>
                   </div>
                 </a>
               </li>
@@ -174,11 +169,9 @@
             <p>No events found.</p>
           </div>
           {{/if}}
-          -->
         </div>
     </div>
   </script>
-
 
   <script type="text/template7" id="culturemap">
     <!-- Dynamic navbar for iOS theme -->
@@ -208,6 +201,59 @@
 
         <div class="page-content">
           <div style="width:100%;height:100%" id="map_canvas"></div>
+        </div>
+
+        <!-- Bottom Toolbar-->
+        <div class="toolbar">
+            <div class="toolbar-inner">
+                <!-- Toolbar links -->
+                <a href="#" class="link">Link 1</a>
+                <a href="#" class="link">Link 2</a>
+            </div>
+        </div>
+    </div>
+  </script>
+
+  <script type="text/template7" id="about">
+    <!-- Dynamic navbar for iOS theme -->
+    {{#if @global.ios}}
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+        </div>
+        <div class="center sliding">About</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="page toolbar-through" data-page="about">
+        <!-- Fixed navbar for Material theme -->
+        {{#if @global.material}}
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
+              </div>
+            <div class="center sliding">About</div>
+          </div>
+        </div>
+        {{/if}}
+
+        <div class="about page-content">
+          <p>
+            Arts Whistler is a registered charity established in 1982 with the goal of weaving arts and culture into the fabric of the Whistler community. We advocate for the arts, local artists, and the local community, providing opportunities for people to have access to bold, inspiring, and engaging experiences in the arts community. Arts Whistler is the community’s umbrella arts organization, playing a significant leadership role in arts advocacy and cultural development.
+          </p>
+          <p>
+            Arts Whistler established task forces and was an ambassador for the ambitious Whistler 2020 vision. When the 2010 Olympic Games hit Whistler, Arts Whistler helped build a Legacy Project by launching a new Media Arts Club at Whistler Secondary School, as well as partnering with key players in the community to be a part of Whistler Live! – Whistler’s cultural festival during the 2010 Winter Games.
+          </p>
+            <h2>What’s in a Name?</h2>
+          <p>
+            Maurice “Maury” Young was an avid sailor, skier, and philanthropist who had a big impact on the Whistler community. The Young family believed in Whistler’s future from the early days of the area’s ski development, and Maury began serving as the chair of the Whistler Mountain Ski Corporation in 1988, a position he held for nine years.
+          </p>
+          <p>
+            To honour Maury when he passed in 1999 the Young family donated two million dollars to help make the building of the Arts Centre possible. They knew that Maury would be proud to have his name attached to a figurative and literal stage, for residents and visitors alike, to interact and share their passions and life experiences.
+          </p>
         </div>
 
         <!-- Bottom Toolbar-->

@@ -1,7 +1,7 @@
 // Code for platform detection
 var isMaterial = Framework7.prototype.device.ios === false;
 var isIos = Framework7.prototype.device.ios === true;
-var map;
+var map, fetchEventsState, events;
 
 // Add the above as global variables for templates
 Template7.global = {
@@ -52,6 +52,8 @@ var mainView = myApp.addView('.view-main', {
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function deviceIsReady() {
   console.log('Device is ready!');
+
+  fetchEvents();
 });
 
 $$(document).on('click', '.panel .discover-link', function discoverLink() {
@@ -70,19 +72,19 @@ $$(document).on('click', '.panel .discover-link', function discoverLink() {
 $$(document).on('click', '.panel .events-link', function eventsLink() {
   // @TODO fetch the favorites (if any) from localStorage
   //var favorites = JSON.parse(localStorage.getItem('favorites'));
+
   mainView.router.load({
     template: myApp.templates.events,
     animatePages: false,
     context: {
-      events: null
+      events: events,
+      fetchEventsState: fetchEventsState
     },
     reload: true,
   });
 });
 
 $$(document).on('click', '.panel .culturemap-link', function culturemapLink() {
-  // @TODO fetch the favorites (if any) from localStorage
-  //var favorites = JSON.parse(localStorage.getItem('favorites'));
   mainView.router.load({
     template: myApp.templates.culturemap,
     animatePages: false,
@@ -108,15 +110,26 @@ myApp.onPageInit('culturemap', function(page) {
 
 });
 
+$$(document).on('click', '.panel .about-link', function aboutLink() {
+  mainView.router.load({
+    template: myApp.templates.about,
+    animatePages: false,
+    context: {
+      events: null
+    },
+    reload: true,
+  });
+});
+
 $$('.panel-left').on('panel:opened', function () {
-    console.log('setting clickable to false');
     if (typeof map != 'undefined') {
+      console.log('setting clickable to false');
       map.setClickable(false);
     }
 });
 $$('.panel-left').on('panel:closed', function () {
-    console.log('setting clickable to true');
     if (typeof map != 'undefined') {
+      console.log('setting clickable to true');
       map.setClickable(true);
     }
 });
@@ -154,3 +167,18 @@ function onMapReady() {
   });
 }
 
+function fetchEvents() {
+  fetchEventsState = 'pending';
+  $$.ajax({
+    url: 'js/events.json',
+    success: function searchSuccess(resp) {
+      var result = eval('(' + resp + ')');
+      events = result.events;
+      fetchEventsState = 'success';
+    },
+    error: function searchError(xhr, err) {
+      fetchEventsState = 'failure';
+      console.log(err);
+    }
+  });
+}
