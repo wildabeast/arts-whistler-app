@@ -94,7 +94,7 @@ ul.flex {
   flex-wrap: wrap;
   justify-content: space-between; /* or space-around */
   padding:8px 8px 0px;
-  background-color:black;
+  background-color:#2A5B7C;
   margin:0px;
   height: calc(100% - 8px);
 } 
@@ -117,7 +117,7 @@ border-radius: 10px;
 .flex span {
   position: absolute;
   bottom: 0;
-  padding: 3px;
+  padding: 20px 3px 3px;
   font-weight: bold;
   /*background-color: rgba(0, 0, 0, .5);*/
   display:block;
@@ -160,4 +160,9 @@ border-radius: 10px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position:center -20px;
+}
+
+/* events navbar fix off by 2 pixels */
+.navbar-through .with-subnavbar .page-content {
+  padding-top:86px;
 }

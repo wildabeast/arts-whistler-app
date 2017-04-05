@@ -90,9 +90,45 @@ $$(document).on('click', '.culturemap-link', function culturemapLink() {
   });
 });
 
+$$(document).on('click', '.about-link', function aboutLink() {
+  mainView.router.load({
+    template: myApp.templates.about,
+    animatePages: false,
+    context: {
+      events: null
+    },
+    reload: true,
+  });
+});
+
+$$(document).on('click', '.events-back', function eventsBack() {
+  myApp.showPreloader();
+  fetchEvents(events.index - 1, function() {
+    myApp.hidePreloader();
+    mainView.router.load({
+      template: myApp.templates.events,
+      animatePages: false,
+      context: events,
+      reload: true,
+    });
+  });
+});
+
+$$(document).on('click', '.events-forward', function eventsBack() {
+  myApp.showPreloader();
+  fetchEvents(events.index + 1, function() {
+    myApp.hidePreloader();
+    mainView.router.load({
+      template: myApp.templates.events,
+      animatePages: false,
+      context: events,
+      reload: true,
+    });
+  });
+});
+
 myApp.onPageInit('culturemap', function(page) {
 
-  console.log('culturemap init');
   var div = document.getElementById("map_canvas");
 
   //if (typeof map === 'undefined') {
@@ -105,26 +141,13 @@ myApp.onPageInit('culturemap', function(page) {
 
 });
 
-$$(document).on('click', '.about-link', function aboutLink() {
-  mainView.router.load({
-    template: myApp.templates.about,
-    animatePages: false,
-    context: {
-      events: null
-    },
-    reload: true,
-  });
-});
-
 $$('.panel-left').on('panel:opened', function () {
     if (typeof map != 'undefined') {
-      console.log('setting clickable to false');
       map.setClickable(false);
     }
 });
 $$('.panel-left').on('panel:closed', function () {
     if (typeof map != 'undefined') {
-      console.log('setting clickable to true');
       map.setClickable(true);
     }
 });
@@ -147,17 +170,20 @@ function onMapReady() {
   });
 }
 
-function fetchEvents() {
+function fetchEvents(index=0, cb) {
   fetchEventsState = 'pending';
   $$.ajax({
-    url: 'http://artswhistler.com/calendar/action~posterboard/page_offset~0/cat_ids~40,32,39,38,34/request_format~json?request_type=json&ai1ec_doing_ajax=true',
+    url: 'http://artswhistler.com/calendar/action~posterboard/page_offset~' + index + '/cat_ids~40,32,39,38,34/request_format~json?request_type=json&ai1ec_doing_ajax=true',
     success: function searchSuccess(resp) {
       events = parseEvents(eval('(' + resp + ')'));
+      events.index = index;
       fetchEventsState = 'success';
+      if (typeof cb == 'function') cb();
     },
     error: function searchError(xhr, err) {
       fetchEventsState = 'failure';
       console.log(err);
+      if (typeof cb == 'function') cb();
     }
   });
 }

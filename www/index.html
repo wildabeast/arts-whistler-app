@@ -131,7 +131,7 @@ height:55px"></div>
     </div>
     {{/if}}
 
-    <div class="page" data-page="events">
+    <div class="page with-subnavbar" data-page="events">
         <!-- Fixed navbar for Material theme -->
         {{#if @global.material}}
           <div class="navbar">
@@ -144,8 +144,21 @@ height:55px"></div>
         </div>
         {{/if}}
 
-        <div class="page-content">
-          <div class="content-block-title">{{title}}</div>
+        <div class="page-content">   
+        <!-- Sub navbar -->
+        <div class="subnavbar">
+          <div class="left">
+            <a href="#" class="events-back link icon-only{{#unless index}} disabled{{/unless}}">
+                <i class="icon icon-back"></i>
+            </a>
+          </div>
+          <div class="center">{{title}}</div>
+          <div class="right">
+            <a href="#" class="events-forward link icon-only">
+                <i class="icon icon-forward"></i>
+            </a>
+          </div>
+        </div>
           {{#if events}}
           <div class="list-block media-list">
             <ul>
