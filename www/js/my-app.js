@@ -1,7 +1,7 @@
 // Code for platform detection
 var isMaterial = Framework7.prototype.device.ios === false;
 var isIos = Framework7.prototype.device.ios === true;
-var map, fetchEventsState, events;
+var map, fetchEventsState, events, locations;
 
 // Add the above as global variables for templates
 Template7.global = {
@@ -54,6 +54,7 @@ $$(document).on('deviceready', function deviceIsReady() {
   console.log('Device is ready!');
 
   fetchEvents();
+  fetchLocations();
 });
 
 $$(document).on('click', '.panel .discover-link', function discoverLink() {
@@ -69,22 +70,19 @@ $$(document).on('click', '.panel .discover-link', function discoverLink() {
   }
 });
 
-$$(document).on('click', '.panel .events-link', function eventsLink() {
+$$(document).on('click', '.events-link', function eventsLink() {
   // @TODO fetch the favorites (if any) from localStorage
   //var favorites = JSON.parse(localStorage.getItem('favorites'));
 
   mainView.router.load({
     template: myApp.templates.events,
     animatePages: false,
-    context: {
-      events: events,
-      fetchEventsState: fetchEventsState
-    },
+    context: events,
     reload: true,
   });
 });
 
-$$(document).on('click', '.panel .culturemap-link', function culturemapLink() {
+$$(document).on('click', '.culturemap-link', function culturemapLink() {
   mainView.router.load({
     template: myApp.templates.culturemap,
     animatePages: false,
@@ -107,7 +105,7 @@ myApp.onPageInit('culturemap', function(page) {
 
 });
 
-$$(document).on('click', '.panel .about-link', function aboutLink() {
+$$(document).on('click', '.about-link', function aboutLink() {
   mainView.router.load({
     template: myApp.templates.about,
     animatePages: false,
@@ -134,41 +132,25 @@ $$('.panel-left').on('panel:closed', function () {
 function onMapReady() {
 
   // Move to the position with animation
-  map.animateCamera({
+  map.moveCamera({
     target: {lat: 50.117774, lng: -122.9544902},
-    zoom: 17,
-    tilt: 60,
-    bearing: 140,
-    duration: 5000
+    zoom: 15
   }, function() {
 
-    // Add a maker
-    map.addMarker({
-      position: {lat: 50.117774, lng: -122.9544902},
-      title: "Arts Whistler",
-      snippet: "Its the home base.",
-      animation: plugin.google.maps.Animation.BOUNCE
-    }, function(marker) {
-
-      // Show the info window
-      // marker.showInfoWindow();
-
-      // Catch the click event
-      marker.on(plugin.google.maps.event.INFO_CLICK, function() {
-
-        // To do something...
-        alert("Hello world!");
-
-      });
+    locations.forEach(function(loc) {
+      map.addMarker({
+        position: { lat: loc.lat, lng: loc.long},
+        title: loc.title
+      })
     });
+
   });
 }
 
 function fetchEvents() {
   fetchEventsState = 'pending';
   $$.ajax({
-    //url: 'js/events.json',
-    url: 'http://artswhistler.com/calendar/action~posterboard/page_offset~1/cat_ids~40,32,39,38,34/request_format~json?request_type=json&ai1ec_doing_ajax=true',
+    url: 'http://artswhistler.com/calendar/action~posterboard/page_offset~0/cat_ids~40,32,39,38,34/request_format~json?request_type=json&ai1ec_doing_ajax=true',
     success: function searchSuccess(resp) {
       events = parseEvents(eval('(' + resp + ')'));
       fetchEventsState = 'success';
@@ -189,5 +171,23 @@ function parseEvents(resp) {
       events = events.concat(dates[key].events.notallday);
     }
   }
-  return events;
+  return {
+    events: events,
+    title: resp.html.title
+  };
+}
+
+function fetchLocations() {
+  fetchEventsState = 'pending';
+  $$.ajax({
+    url: 'js/locations.json',
+    success: function searchSuccess(resp) {
+      locations = eval('(' + resp + ')');
+      //fetchEventsState = 'success';
+    },
+    error: function searchError(xhr, err) {
+      fetchEventsState = 'failure';
+      console.log(err);
+    }
+  });
 }
