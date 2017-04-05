@@ -84,7 +84,8 @@
             <a href="#" class="link icon-only open-panel"><i class="fa fa-bars"></i></a>
           </div>
           <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
-          <!-- div class="center sliding">Discover</div -->
+          <div class="center sliding"><img src="img/Arts-Whistler-horizontal-PAINT.png" style="
+height:55px"></div>
         </div>
       </div>
       <!-- Pages container, because we use fixed-through navbar and toolbar, it has additional appropriate classes-->
@@ -93,17 +94,22 @@
         <div data-page="index" class="page">
           <!-- Scrollable page content -->
           <div class="page-content">
-            <h1 style="text-align:center">Arts Whistler</h1>
+            <!-- div class="home-logo"></div -->
             <ul class="flex">
-              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/discover-events.jpg);">
-              <a href="#" class="events-link">
-                <span>Events</span>
-              </a>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/12/Untitled-300x159.png);">
+                <a href="#" class="events-link">
+                  <span>Events</span>
+                </a>
               </li>
               <li style="background-image:url(img/gmap-static.png);">
-              <a href="#" class="culturemap-link">
-                <span>Culture Map</span>
-              </a>
+                <a href="#" class="culturemap-link">
+                  <span>Culture Map</span>
+                </a>
+              </li>
+              <li style="background-image:url(http://artswhistler.com/wp-content/uploads/2016/09/2014-10-31-19.29.44.jpg);">
+                <a href="#" class="about-link">
+                  <span>About Arts Whistler</span>
+                </a>
               </li>
             </ul>
           </div>
@@ -139,6 +145,7 @@
         {{/if}}
 
         <div class="page-content">
+          <div class="content-block-title">{{title}}</div>
           {{#if events}}
           <div class="list-block media-list">
             <ul>
