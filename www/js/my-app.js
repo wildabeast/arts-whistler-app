@@ -127,6 +127,10 @@ $$(document).on('click', '.events-forward', function eventsBack() {
   });
 });
 
+myApp.onPageInit('details', function(page) {
+  console.log(page.context);
+});
+
 myApp.onPageInit('culturemap', function(page) {
 
   var div = document.getElementById("map_canvas");

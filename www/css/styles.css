@@ -94,7 +94,7 @@ ul.flex {
   flex-wrap: wrap;
   justify-content: space-between; /* or space-around */
   padding:8px 8px 0px;
-  background-color:#2A5B7C;
+  /* background-color:#2A5B7C; */
   margin:0px;
   height: calc(100% - 8px);
 } 
@@ -123,9 +123,10 @@ border-radius: 10px;
   display:block;
   width: calc(100% - 6px);
   background:linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+  border-radius:0px 0px 10px 10px; 
 }
 
-.flex a {
+.flex span {
   color:white;
   font-size:1.2em;
   text-transform: uppercase;
