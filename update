@@ -1,0 +1,6 @@
+# bash
+rm ../artswhis.zip
+zip -r ../artswhis.zip ./*
+
+# prod update
+curl -X PUT -F file=@/Users/ryanw/dev/artswhis.zip https://build.phonegap.com/api/v1/apps/2766095?auth_token=$PGB_AUTH_TOKEN
